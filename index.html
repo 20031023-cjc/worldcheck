@@ -1,50 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WorldView</title>
-
-  <!-- Leaflet 地图样式 & 脚本 -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <!-- 动画库 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-  <!-- 字体和图标库 -->
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-  <!-- 自定义样式 & 功能脚本 -->
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><span id="dynamic-title">WorldView</span></title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-  <header class="animate__animated animate__fadeInDown">
-    <h1><span class="glow">🌌 WorldView</span></h1>
-    <div class="language-switch">
-      <button data-lang="en"><i class="fas fa-globe"></i> English</button>
-      <button data-lang="zh"><i class="fas fa-language"></i> 中文</button>
-      <button data-lang="ja"><i class="fas fa-font"></i> 日本語</button>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="spinner"></div>
+  </div>
+  <header>
+    <div class="logo" id="logo">🌐 WorldView</div>
+    <div class="controls">
+      <input type="text" id="search-input" placeholder="Enter city name" aria-label="City search">
+      <div class="dropdown" id="suggestions"></div>
+      <button id="search-btn">Search</button>
+      <button id="compare-toggle" aria-pressed="false">Compare</button>
+      <button id="theme-switch">🌙</button>
+      <button id="map-style-switch">🗺️</button>
+      <div class="lang-switch">
+        <button data-lang="en">EN</button>
+        <button data-lang="zh">中文</button>
+        <button data-lang="ja">日本語</button>
+      </div>
     </div>
   </header>
-
   <main>
-    <div class="search-box animate__animated animate__fadeInUp">
-      <input type="text" id="cityInput" placeholder="Enter city name" />
-      <button onclick="getWeather()"><i class="fas fa-search"></i> Search</button>
-      <button onclick="getLocationWeather()" id="useLocationBtn"><i class="fas fa-map-marker-alt"></i> Use My Location</button>
+    <div id="map"></div>
+    <div id="info-container">
+      <div class="card flip-card" id="weather-card">
+        <div class="flip-inner">
+          <div class="flip-front" id="weather-front"></div>
+          <div class="flip-back" id="weather-back">
+            <canvas id="weather-chart"></canvas>
+            <div id="sunlight-progress" aria-label="Sunlight progress"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card flip-card" id="culture-card">
+        <div class="flip-inner">
+          <div class="flip-front" id="culture-front"></div>
+          <div class="flip-back" id="culture-back"></div>
+        </div>
+      </div>
     </div>
-
-    <div id="map" class="animate__animated animate__fadeIn"></div>
-
-    <div id="weatherInfo" class="info-card animate__animated animate__fadeInUp"></div>
-    <div id="cultureInfo" class="info-card animate__animated animate__fadeInUp"></div>
+    <div id="compare-container" class="hidden"></div>
+    <div id="favourites">
+      <h2>Favorites</h2>
+      <ul></ul>
+    </div>
+    <button id="share-btn">Share</button>
+    <div id="particle-container"></div>
+    <div id="threejs-container"></div>
   </main>
-
-  <footer>
-    <p>Made by <strong>Cai Jiacheng</strong> | <a href="https://github.com/20031023-cjc/world-weather" target="_blank">GitHub</a></p>
-  </footer>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>
