@@ -1,171 +1,150 @@
-/* 🌐 全局风格升级 */
 body {
-  font-family: 'Quicksand', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #eaeff6, #f9f7f1);
-  color: #2d2d2d;
-  text-align: center;
-  transition: background 0.6s ease, color 0.3s ease;
+  font-family: 'Quicksand', sans-serif;
+  background: url('stars.jpg') no-repeat center center fixed;
+  background-size: cover;
+  transition: background 0.5s;
+}
+
+body.dark {
+  background: #0b0c2a;
+  color: #fff;
+}
+
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.7);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top: 5px solid #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 header {
-  background: linear-gradient(to right, #92c1f0, #d1e3ff);
-  color: #1f3c88;
-  padding: 2rem 1rem;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-  position: relative;
-  z-index: 10;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2.4rem;
-  letter-spacing: 1.5px;
-  font-weight: bold;
-}
-
-.glow {
-  text-shadow: 0 0 8px #7abaff, 0 0 14px #a7d8ff;
-  color: #1f3c88;
-}
-
-.language-switch {
-  margin-top: 1rem;
-}
-
-.language-switch button {
-  margin: 0 6px;
-  padding: 8px 20px;
-  font-weight: 600;
-  border: none;
-  border-radius: 20px;
-  background-color: #67aefb;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
-
-.language-switch button:hover {
-  background-color: #4e98eb;
-  transform: scale(1.06);
-}
-
-.search-box {
-  margin: 2rem auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
-  gap: 12px;
+  padding: 1rem;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
 }
 
-.search-box input[type="text"] {
-  padding: 12px 16px;
-  font-size: 1rem;
-  border: 1px solid #cccccc;
-  border-radius: 10px;
-  width: 260px;
-  max-width: 90%;
-  background-color: #fff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  transition: all 0.3s ease;
+.logo {
+  font-size: 2rem;
+  animation: fadeInOut 3s infinite;
 }
 
-.search-box input[type="text"]:focus {
-  outline: none;
-  background-color: #f1faff;
-  box-shadow: 0 0 0 3px #a4d7ff;
+@keyframes fadeInOut {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
-.search-box button {
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  background-color: #ffb86c;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.15s ease;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-.search-box button:hover {
-  background-color: #ffa042;
-  transform: translateY(-2px);
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 #map {
-  height: 440px;
-  margin: 30px auto;
-  max-width: 720px;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-  border: 2px solid #d0e4ff;
+  height: 50vh;
 }
 
-.info-card {
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #ffffffee;
-  border-radius: 18px;
-  max-width: 720px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  text-align: left;
-  line-height: 1.8;
-  font-size: 1.05rem;
-  color: #333333;
-  transition: transform 0.3s ease;
-}
-
-.info-card:hover {
-  transform: translateY(-4px);
-}
-
-.info-card h2,
-.info-card h3 {
-  color: #2467c9;
-}
-
-footer {
-  margin-top: 4rem;
+#info-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
   padding: 1rem;
-  background: #e8eef7;
-  color: #5f6f86;
-  font-size: 0.95rem;
 }
 
-footer a {
-  color: #3d8be4;
-  text-decoration: none;
+.card {
+  perspective: 1000px;
 }
 
-footer a:hover {
-  text-decoration: underline;
+.flip-card .flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
 
-/* 📱 响应式布局优化 */
-@media screen and (max-width: 600px) {
-  #map,
-  .info-card {
-    width: 92%;
-  }
+.flip-card:hover .flip-inner {
+  transform: rotateY(180deg);
+}
 
-  .search-box {
-    flex-direction: column;
-    gap: 14px;
-  }
+.flip-front,
+.flip-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  background: rgba(255,255,255,0.8);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
 
-  .search-box input[type="text"],
-  .search-box button {
-    width: 90%;
-    max-width: 320px;
-  }
+.flip-back {
+  transform: rotateY(180deg);
+}
 
-  .language-switch button {
-    margin-bottom: 0.6rem;
-  }
+#sunlight-progress {
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+#sunlight-progress::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 0;
+  background: gold;
+  transition: width 1s;
+}
+
+.hidden {
+  display: none;
+}
+
+#favourites {
+  position: fixed;
+  top: 10%;
+  right: 1rem;
+  background: rgba(255,255,255,0.8);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+#particle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#threejs-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 200px;
+  height: 200px;
 }
